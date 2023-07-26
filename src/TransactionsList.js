@@ -31,6 +31,8 @@ console.log(searchParameter);
             (transaction)=>transaction.id !== id);
             setTransactions(updatedTransactions)
 
+            
+
      }
      const filteredTransactions=[...filter]
      const transactionss = [...transactions]
