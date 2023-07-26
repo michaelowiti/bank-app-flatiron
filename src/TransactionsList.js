@@ -8,6 +8,7 @@ const TransactionsList=()=>{
 
     const [transactions, setTransactions]=useState([]);
     const [searchParameter, setSearchParameter]= useState("");
+    const [filter, setFilter]= useState([])
 
     useEffect(() => {
       fetch(" http://localhost:3000/transactions")
@@ -23,7 +24,7 @@ const TransactionsList=()=>{
      // SearchBar function
      const transactionsList= transactions.filter((transaction) => transaction.description)
 
-
+console.log(searchParameter);
      //delete transactions
      function handleDeleteTransaction(id){
         const updatedTransactions = transactions.filter(
@@ -31,10 +32,11 @@ const TransactionsList=()=>{
             setTransactions(updatedTransactions)
 
      }
-
+     const filteredTransactions=[...filter]
+     const transactionss = [...transactions]
      return(
         <div>
-            <SearchBar searchParameter={searchParameter} onTransSearch={setSearchParameter}/>
+            <SearchBar searchParameter={searchParameter} onTransSearch={setSearchParameter} setFilter={setFilter} transaction={transactions}/>
             <AddTransactfom onAddTransaction={handleAddTransaction} />
 
 
@@ -45,12 +47,18 @@ const TransactionsList=()=>{
                     <th>Description</th>
                     <th>Category</th>
                     <th>Amount</th>
-                    <th>DELETE?</th>
+                    <th>delete</th>
                     </tr>
                 </thead>
-                {transactionsList.map((transaction) =>
+                {/* {transactionsList.map((transaction) =>
                     <Transactions key={transaction.id} transaction={transaction} onDeleteTransaction={handleDeleteTransaction} />
-                )}
+                )} */}
+
+                {searchParameter.length>0 ? filteredTransactions.map((transaction) =>
+                    <Transactions key={transaction.id} transaction={transaction} onDeleteTransaction={handleDeleteTransaction} />
+                ):transactionss.map((transaction) =>
+                <Transactions key={transaction.id} transaction={transaction} onDeleteTransaction={handleDeleteTransaction} />
+            )}
             </table>
         </div>
 
